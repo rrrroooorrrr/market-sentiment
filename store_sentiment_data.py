@@ -23,7 +23,7 @@ def write_to_db(processed_articles, median, avg):
             collection.insert_many(processed_articles)
             collection.insert_one(summary_document)
 
-            print('Data written to DB successfully.')
+            print('Data written to DB successfully...')
 
         except Exception as e:
             print(f"DB Write Error: {e}")
@@ -35,7 +35,7 @@ def write_to_csv(processed_articles, median, avg):
         print(f'Writing CSV output: {file_name}')
         
         with open(file_name, mode='w', newline='', encoding='utf-8') as file:
-            fieldnames = ['_id', 'title', 'link', 'published', 'summary', 'sentiment_score', 'median_sentiment_score', 'average_sentiment_score']
+            fieldnames = ['_id', 'title', 'link', 'date', 'summary', 'sentiment_score', 'median_sentiment_score', 'average_sentiment_score']
 
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()
