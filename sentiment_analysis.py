@@ -1,24 +1,26 @@
-# import schedule
+import schedule
+import time
 import nltk
+import numpy as np
 from nltk.sentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
 from transformers import pipeline
-# Additional imports for database and error handling
-from db_stuff import db_init
 from fetch_rss import fetch_news
-from store_data import store_db, store_csv
-# Establishing a connection to the MongoDB database
-nltk.downloader.download('vader_lexicon')
+from store_sentiment_data import write_to_db, write_to_csv
 
 
 
+# Download necessary NLTK data
+def download_nltk_data():
+    nltk.download('vader_lexicon') 
+
+# Initialize NLP models
 vader_analyzer = SentimentIntensityAnalyzer()
 bert_model = pipeline('sentiment-analysis', model='bert-base-uncased')
-
-
+processed_articles = []
 
 def analyze_sentiment(article_text):
-   # Vader
+    # Vader
     vader_score = vader_analyzer.polarity_scores(article_text)['compound']
 
     # TextBlob
@@ -27,37 +29,40 @@ def analyze_sentiment(article_text):
     # Hugging Face Model (BERT)
     bert_score = bert_model(article_text)[0]['score']
 
-    # Aggregate scores - you can adjust the weights as needed
+    # Aggregate scores - adjust weights as needed
     combined_score = (vader_score + textblob_score + bert_score) / 3
     return combined_score
 
-def process_news(articles, collection):
+def process_news():
+    articles = fetch_news() 
+    print('Analyzing Sentiment...')
     for article in articles:
-        sentiment_score = analyze_sentiment(article['text'])
-        print({article, sentiment_score})
-        store_csv(article)
-        store_db(collection, article, sentiment_score)
+        sentiment_score = analyze_sentiment(article['summary'])
+        article['sentiment_score']=sentiment_score
+        article['median_sentiment_score']=''
+        article['average_sentiment_score']=''
         
+        processed_articles.append(article)
 
+     # Calculate median and average sentiment scores
+    scores = [article['sentiment_score'] for article in processed_articles]
+    median = np.median(scores)
+    avg    = np.mean(scores)
+
+    write_to_db(processed_articles, median, avg)
+    write_to_csv(processed_articles, median, avg)
 
 def main():
-    db_connected = False
-    collection = None
-    try: 
-        collection = db_init.init_db
-        db_connected = True
-    except:
-        print('connection failed')
-   
-    if db_connected:
-        articles = fetch_news() 
-        process_news(articles, collection)
-
+    download_nltk_data()
     # schedule.every(15).minutes.do(process_news)
+    # schedule.every().day.at("16:00").do(write_to_csv)
+    # schedule.every().day.at("16:00").do(write_to_db)
+    process_news()
+        
 
-    # while True:
-    #     schedule.run_pending()
-    #     sleep(60)  # Sleep to avoid tight looping
+    while True:
+            schedule.run_pending()
+            time.sleep(60)  # Sleep to avoid tight looping
 
 if __name__ == "__main__":
     main()
