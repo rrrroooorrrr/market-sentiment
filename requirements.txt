@@ -1,0 +1,15 @@
+pandas
+numpy
+yfinance
+scikit-learn
+matplotlib
+requests
+feedparser
+beautifulsoup4
+lxml
+schedule
+nltk
+textblob
+transformers
+pymongo
+tensorflow
