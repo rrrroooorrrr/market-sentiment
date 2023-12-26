@@ -160,3 +160,7 @@ cython_debug/
 #.idea/
 benv
 __pycache__
+<<<<<<< HEAD
+=======
+results
+>>>>>>> b04134d (rename file. output csv to results dir)

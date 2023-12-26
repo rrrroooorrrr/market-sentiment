@@ -31,7 +31,7 @@ def write_to_db(processed_articles, median, avg):
 def write_to_csv(processed_articles, median, avg):
     if processed_articles:
         current_date = datetime.datetime.now().strftime("%Y-%m-%d")
-        file_name = f"{current_date}_sentiment.csv"
+        file_name = f"results/{current_date}_sentiment.csv"
         print(f'Writing CSV output: {file_name}')
         
         with open(file_name, mode='w', newline='', encoding='utf-8') as file:

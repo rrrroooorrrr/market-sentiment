@@ -14,7 +14,7 @@ def write_to_csv(stock_data, filename):
         for row in stock_data:
             writer.writerow(row)
 
-def get_market_data(ticker, start_date, end_date):
+def fetch_market_data(ticker, start_date, end_date):
     print(f'Fetching {ticker} data...')
     data = yf.download(ticker, start=start_date, end=end_date, group_by=ticker)
     return data

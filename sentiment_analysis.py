@@ -8,7 +8,7 @@ from transformers import pipeline
 
 
 from fetch_rss import fetch_rss
-# from get_market_data import get_market_data
+from fetch_market_data import fetch_market_data
 from store_sentiment_data import write_to_db, write_to_csv
 from format_dates import convert_to_standard_format
 
@@ -56,12 +56,15 @@ def process_news():
     scores = [article['sentiment_score'] for article in processed_articles]
     median = np.median(scores)
     avg    = np.mean(scores)
-
-    write_to_db(processed_articles, median, avg)
+    
     write_to_csv(processed_articles, median, avg)
+    write_to_db(processed_articles, median, avg)
+    
 
 def main():
     download_nltk_data()
+    market_data = fetch_market_data('SPY', '2020-01-01', '2023-01-01')
+    archive_data = fetch_archives()
     # schedule.every(15).minutes.do(process_news)
     # schedule.every().day.at("16:00").do(write_to_csv)
     # schedule.every().day.at("16:00").do(write_to_db)

@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from get_market_data import get_market_data
+from fetch_market_data import fetch_market_data
 
 def combine_data(sentiment_data, market_data):
     # If 'Date' is an index in market_data, reset it
@@ -23,7 +23,7 @@ def combine_data(sentiment_data, market_data):
 
 # Example usage
 sentiment_data = pd.read_csv('2023-12-25_sentiment.csv')
-market_data = get_market_data('SPY', '2020-01-01', '2023-01-01')
+market_data = fetch_market_data('SPY', '2020-01-01', '2023-01-01')
 combined_data = combine_data(sentiment_data, market_data)
 
 # Basic Exploratory Data Analysis
