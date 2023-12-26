@@ -35,7 +35,7 @@ def write_to_csv(processed_articles, median, avg):
         print(f'Writing CSV output: {file_name}')
         
         with open(file_name, mode='w', newline='', encoding='utf-8') as file:
-            fieldnames = ['_id', 'title', 'link', 'date', 'summary', 'sentiment_score', 'median_sentiment_score', 'average_sentiment_score']
+            fieldnames = ['_id', 'title', 'link', 'Date', 'summary', 'sentiment_score', 'median_sentiment_score', 'average_sentiment_score']
 
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()

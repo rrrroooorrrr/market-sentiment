@@ -5,9 +5,13 @@ import numpy as np
 from nltk.sentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
 from transformers import pipeline
+
+
 from fetch_rss import fetch_rss
+# from get_market_data import get_market_data
 from store_sentiment_data import write_to_db, write_to_csv
 from format_dates import convert_to_standard_format
+
 
 
 
@@ -39,7 +43,7 @@ def process_news():
     print('Analyzing Sentiment...')
     for article in articles:
         sentiment_score = analyze_sentiment(article['summary'])
-        article['date'] = convert_to_standard_format(article['published'])
+        article['Date'] = convert_to_standard_format(article['published'])
         article['sentiment_score']=sentiment_score
         article['median_sentiment_score']=''
         article['average_sentiment_score']=''
@@ -62,6 +66,7 @@ def main():
     # schedule.every().day.at("16:00").do(write_to_csv)
     # schedule.every().day.at("16:00").do(write_to_db)
     process_news()
+  
         
 
     while True:
