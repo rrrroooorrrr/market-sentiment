@@ -19,4 +19,6 @@ def fetch_market_data(ticker, start_date, end_date):
     data = yf.download(ticker, start=start_date, end=end_date, group_by=ticker)
     return data
 
-# market_data = get_market_data('SPY', '2020-01-01', '2023-01-01')
+market_data = fetch_market_data('SPY', '1993-01-29', '2023-12-01')
+
+print(market_data)

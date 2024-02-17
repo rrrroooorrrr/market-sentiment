@@ -1,8 +1,8 @@
 from pymongo import MongoClient
-def init_db():
+def init_db(db_name):
     try:
         client = MongoClient('mongodb://localhost:27017/')
-        db = client.news_sentiment
+        db = client[db_name]
     
         return db
     except Exception as e:

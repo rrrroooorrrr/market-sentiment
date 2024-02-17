@@ -6,7 +6,7 @@ def write_to_db(processed_articles, median, avg):
     if processed_articles:
         try:
             # Initialize DB connection
-            db = db_init.init_db()
+            db = db_init.init_db('sentiment_data')
 
             # Create a new collection name based on the current date
             current_date = datetime.datetime.now().strftime("%Y-%m-%d")

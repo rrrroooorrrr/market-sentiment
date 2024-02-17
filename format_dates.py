@@ -12,7 +12,8 @@ formats = [
     "%m-%d-%Y %I:%M:%S %p", "%Y%m%d%H%M%S", "%d%m%Y%H%M%S",
     "%m%d%Y%H%M%S", "%Y%d%m%H%M%S", "%H:%M %d-%m-%Y", "%I:%M %p %m-%d-%Y",
     # More formats can be added here
-     "%a, %d %b %Y %H:%M:%S %Z", "%d %b %Y %H:%M %Z", "%b %d, %Y %H:%M %Z"
+     "%a, %d %b %Y %H:%M:%S %Z", "%d %b %Y %H:%M %Z", "%b %d, %Y %H:%M %Z",
+     '%Y-%m-%dT%H:%M:%S%z'
 ]
 
 
